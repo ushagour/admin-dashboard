@@ -10,6 +10,12 @@ export default function MainLayout() {
     <div className="wrapper">
       <Header toggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)} />
       <Sidebar collapsed={sidebarCollapsed} />
+      <div className={`content ${sidebarCollapsed ? 'collapsed' : ''}`}>
+        <div className="container-fluid">
+          <Outlet />
+        </div>
+        </div>
+      
 
     </div>
   );

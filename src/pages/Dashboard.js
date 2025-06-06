@@ -1,7 +1,6 @@
 // pages/Dashboard.js
 import StatsCards from '../components/ui/StatsCards';
-import MainChart from '../components/ui/Charts';
-import TodoList from '../components/ui/TodoList';
+import Traffic from '../components/ui/Traffic';
 import Timeline from '../components/ui/Timeline';
 
 export default function Dashboard() {
@@ -15,30 +14,16 @@ export default function Dashboard() {
         </ol>
       </div>
       
-      <h1 className="page-header">Dashboard</h1>
       
       <StatsCards />
       
       {/* Main Chart */}
-      <div className="row">
-        <div className="col-md-12">
-          <div className="panel panel-default">
-            <div className="panel-heading">
-              Site Traffic Overview
-            </div>
-            <div className="panel-body">
-              <MainChart />
-            </div>
-          </div>
-        </div>
-      </div>
-      
+               <Traffic />
+
       <div className="row">
         <div className="col-md-6">
-          <TodoList />
         </div>
         <div className="col-md-6">
-          <Timeline />
         </div>
       </div>
     </div>
