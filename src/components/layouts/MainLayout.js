@@ -1,22 +1,26 @@
 import { useState } from 'react';
-import Header from './Header';
+import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import { Outlet } from 'react-router-dom';
 
 export default function MainLayout() {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
-    <div className="wrapper">
-      <Header toggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)} />
-      <Sidebar collapsed={sidebarCollapsed} />
-      <div className={`content ${sidebarCollapsed ? 'collapsed' : ''}`}>
-        <div className="container-fluid">
-          <Outlet />
-        </div>
-        </div>
-      
+ <div className="d-flex">
+        {/* Sidebar */}
 
-    </div>
+      <Sidebar />
+            {/* Main Content */}
+                <div className="flex-grow-1">
+                      {/* Header */}
+                       <Navbar  />
+                      {/* Dashboard Content */}
+                       <Outlet />  
+
+
+
+        </div>      
+        </div>      
+
   );
 }
