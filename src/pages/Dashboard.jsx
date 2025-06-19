@@ -19,7 +19,7 @@ export default function Dashboard() {
       icon: "🛒",
     },
     {
-      title: "Products",
+      title: "Listings",
       value: "1,234",
       change: "+19%",
       changeType: "success",
@@ -77,7 +77,7 @@ export default function Dashboard() {
     },
   ]
 
-  const topProducts = [
+  const topListings = [
     {
       name: "Wireless Headphones",
       sales: 1234,
@@ -202,16 +202,16 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Top Products & Sales Chart */}
+            {/* Top Listings & Sales Chart */}
             <div className="col-lg-4">
-              {/* Top Products */}
+              {/* Top Listings */}
               <div className="card">
                 <div className="card-header">
-                  <h5 className="card-title mb-0">Top Products</h5>
-                  <small className="text-muted">Best performing products this month</small>
+                  <h5 className="card-title mb-0">Top Listings</h5>
+                  <small className="text-muted">Best performing Listings this month</small>
                 </div>
                 <div className="card-body">
-                  {topProducts.map((product, index) => (
+                  {topListings.map((product, index) => (
                     <div key={index} className="d-flex align-items-center mb-3">
                       <div className="bg-light rounded p-2 me-3">📦</div>
                       <div className="flex-grow-1">

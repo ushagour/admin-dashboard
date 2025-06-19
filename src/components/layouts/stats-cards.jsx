@@ -17,7 +17,7 @@ const stats = [
     icon: ShoppingCart,
   },
   {
-    title: "Products",
+    title: "Listings",
     value: "1,234",
     change: "+19%",
     changeType: "positive",

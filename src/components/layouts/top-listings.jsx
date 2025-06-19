@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 
-const topProducts = [
+const topListings = [
   {
     name: "Wireless Headphones",
     sales: 1234,
@@ -39,16 +39,16 @@ const topProducts = [
   },
 ]
 
-export function TopProducts() {
+export function TopListings() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Top Products</CardTitle>
-        <CardDescription>Best performing products this month</CardDescription>
+        <CardTitle>Top Listings</CardTitle>
+        <CardDescription>Best performing Listings this month</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          {topProducts.map((product, index) => (
+          {topListings.map((product, index) => (
             <div key={product.name} className="flex items-center space-x-4">
               <div className="flex-shrink-0">
                 <img

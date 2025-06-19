@@ -1,8 +1,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Eye, MoreHorizontal } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useNavigate } from "react-router-dom"
+import { Button } from "@/components/ui/button"
 
 const recentOrders = [
   {
@@ -51,16 +52,25 @@ const getStatusColor = (status) => {
   switch (status) {
     case "completed":
       return "bg-green-100 text-green-800"
-    case "processing":
-      return "bg-blue-100 text-blue-800"
+      case "processing":
+        return "bg-blue-100 text-blue-800"
     case "pending":
       return "bg-yellow-100 text-yellow-800"
-    default:
-      return "bg-gray-100 text-gray-800"
-  }
-}
+      default:
+        return "bg-gray-100 text-gray-800"
+      }
+    }
 
-export function RecentOrders() {
+
+
+    
+    export function RecentOrders() {
+          const navigate = useNavigate();
+
+          const goToSettings = () => {
+  navigate("/orders");
+};
+
   return (
     <Card>
       <CardHeader>
@@ -103,9 +113,12 @@ export function RecentOrders() {
           ))}
         </div>
         <div className="mt-4">
-          <Button variant="outline" className="w-full">
-            View All Orders
-          </Button>
+
+
+          <MyButton variant="outline" className="w-full" onClick={goToSettings}>
+  View All Orders
+</MyButton>
+       
         </div>
       </CardContent>
     </Card>
