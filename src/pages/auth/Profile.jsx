@@ -2,6 +2,7 @@
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import { useState } from "react"
+import SideBarTabs from "../../components/SideBarTabs"
 
 export default function Profile() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -71,111 +72,10 @@ export default function Profile() {
       )}
 
       {/* Sidebar */}
-      <div
-        className={`bg-dark text-white position-fixed position-lg-relative ${
-          sidebarOpen ? "d-block" : "d-none d-lg-block"
-        }`}
-        style={{
-          width: "250px",
-          minHeight: "100vh",
-          zIndex: 1050,
-          top: 0,
-          left: 0,
-        }}
-      >
-        <div className="p-3">
-          <div className="d-flex align-items-center justify-content-between mb-4">
-            <div className="d-flex align-items-center">
-              <div className="bg-primary rounded p-2 me-2">📦</div>
-              <div>
-                <h5 className="mb-0">SellerPro</h5>
-                <small className="text-muted">Dashboard</small>
-              </div>
-            </div>
-            <button className="btn btn-sm btn-outline-light d-lg-none" onClick={() => setSidebarOpen(false)}>
-              ✕
-            </button>
-          </div>
-
-          <nav className="nav flex-column">
-            <a className="nav-link text-white-50" href="/">
-              🏠 Dashboard
-            </a>
-            <a className="nav-link text-white-50" href="/products">
-              📦 Products
-            </a>
-            <a className="nav-link text-white-50" href="/orders">
-              🛒 Orders
-            </a>
-            <a className="nav-link text-white-50" href="/customers">
-              👥 Customers
-            </a>
-            <a className="nav-link text-white-50" href="/reclamations">
-              📞 Support Tickets
-            </a>
-            <a className="nav-link text-white-50" href="#">
-              📊 Analytics
-            </a>
-            <a className="nav-link text-white active" href="/profile">
-              👤 Profile
-            </a>
-            <a className="nav-link text-white-50" href="/settings">
-              ⚙️ Settings
-            </a>
-          </nav>
-
-          <div className="mt-4">
-            <button className="btn btn-primary w-100">➕ Add Product</button>
-          </div>
-        </div>
-      </div>
+   
 
       {/* Main Content */}
       <div className="flex-grow-1">
-        {/* Header */}
-        <nav className="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
-          <div className="container-fluid">
-            <button className="btn btn-outline-secondary me-2" onClick={() => setSidebarOpen(!sidebarOpen)}>
-              ☰
-            </button>
-
-            <div className="d-flex flex-grow-1 align-items-center">
-              <div className="position-relative me-auto" style={{ maxWidth: "300px", width: "100%" }}>
-                <input type="search" className="form-control form-control-sm" placeholder="Search..." />
-                <span className="position-absolute top-50 start-0 translate-middle-y ms-2">🔍</span>
-              </div>
-
-              <div className="d-flex align-items-center ms-2">
-                <button className="btn btn-outline-secondary btn-sm me-2">🔔</button>
-                <div className="dropdown">
-                  <button className="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown">
-                    👤
-                  </button>
-                  <ul className="dropdown-menu dropdown-menu-end">
-                    <li>
-                      <a className="dropdown-item" href="/profile">
-                        Profile
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="/settings">
-                        Settings
-                      </a>
-                    </li>
-                    <li>
-                      <hr className="dropdown-divider" />
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="/login">
-                        Logout
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </nav>
 
         {/* Profile Content */}
         <div className="container-fluid p-3 p-md-4">
@@ -218,41 +118,8 @@ export default function Profile() {
           </div>
 
           <div className="row">
-            {/* Sidebar Tabs */}
-            <div className="col-md-3 mb-4">
-              <div className="list-group">
-                <button
-                  className={`list-group-item list-group-item-action ${activeTab === "personal" ? "active" : ""}`}
-                  onClick={() => setActiveTab("personal")}
-                >
-                  👤 Personal Information
-                </button>
-                <button
-                  className={`list-group-item list-group-item-action ${activeTab === "business" ? "active" : ""}`}
-                  onClick={() => setActiveTab("business")}
-                >
-                  🏢 Business Details
-                </button>
-                <button
-                  className={`list-group-item list-group-item-action ${activeTab === "security" ? "active" : ""}`}
-                  onClick={() => setActiveTab("security")}
-                >
-                  🔒 Security & Privacy
-                </button>
-                <button
-                  className={`list-group-item list-group-item-action ${activeTab === "notifications" ? "active" : ""}`}
-                  onClick={() => setActiveTab("notifications")}
-                >
-                  🔔 Notifications
-                </button>
-                <button
-                  className={`list-group-item list-group-item-action ${activeTab === "billing" ? "active" : ""}`}
-                  onClick={() => setActiveTab("billing")}
-                >
-                  💳 Billing & Plans
-                </button>
-              </div>
-            </div>
+ 
+           <SideBarTabs />
 
             {/* Tab Content */}
             <div className="col-md-9">
