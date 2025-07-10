@@ -1,25 +1,14 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { fetchOrders } from "../api/api";
+import ChangeDateFormat from "../helper/ChangeDateFormat";
 
 export default function Orders() {
-  // Sample orders data
-  const orders = [
-    {
-      id: "ORD-001",
-      customer: "Olivia Martin",
-      date: "2023-06-12",
-      total: "$120.50",
-      status: "completed",
-    },
-    {
-      id: "ORD-002",
-      customer: "Jackson Lee",
-      date: "2023-06-11",
-      total: "$89.99",
-      status: "pending",
-    },
-    // ...more orders
-  ];
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    fetchOrders().then(data => setOrders(data)).catch(console.error);
+  }, []);
 
   const getStatusBadge = (status) => {
     switch (status) {
@@ -60,9 +49,10 @@ export default function Orders() {
                   {orders.map((order) => (
                     <tr key={order.id}>
                       <td>{order.id}</td>
-                      <td>{order.customer}</td>
-                      <td>{order.date}</td>
-                      <td>{order.total}</td>
+                      <td>{order.User.name}</td>
+                      <td>
+                       { ChangeDateFormat(order.createdAt)}</td>
+                      <td>{order.total_price}</td>
                       <td>
                         <span className={getStatusBadge(order.status)}>{order.status}</span>
                       </td>

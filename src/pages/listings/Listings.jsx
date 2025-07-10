@@ -1,83 +1,17 @@
 "use client"
 
 import "bootstrap/dist/css/bootstrap.min.css"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { fetchListings } from "../../api/api"
 
 export default function Listings() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [showAddModal, setShowAddModal] = useState(false)
+  const [listings, setListings] = useState([])
 
-  // Sample product data
-  const Listings = [
-    {
-      id: "PROD-001",
-      name: "Product A",
-      price: "$25.00",
-      stock: 100,
-      status: "active",
-    },
-    {
-      id: "PROD-002",
-      name: "Product B",
-      price: "$40.00",
-      stock: 0,
-      status: "inactive",
-    },
-    {
-      id: "PRD-003",
-      name: "Laptop Stand",
-      category: "Accessories",
-      price: "$49.99",
-      stock: 78,
-      status: "In Stock",
-      image: "/placeholder.svg?height=50&width=50",
-    },
-    {
-      id: "PRD-004",
-      name: "Phone Case",
-      category: "Accessories",
-      price: "$19.99",
-      stock: 124,
-      status: "In Stock",
-      image: "/placeholder.svg?height=50&width=50",
-    },
-    {
-      id: "PRD-005",
-      name: "USB Cable",
-      category: "Accessories",
-      price: "$9.99",
-      stock: 56,
-      status: "In Stock",
-      image: "/placeholder.svg?height=50&width=50",
-    },
-    {
-      id: "PRD-006",
-      name: "Bluetooth Speaker",
-      category: "Electronics",
-      price: "$79.99",
-      stock: 18,
-      status: "Low Stock",
-      image: "/placeholder.svg?height=50&width=50",
-    },
-    {
-      id: "PRD-007",
-      name: "Wireless Mouse",
-      category: "Electronics",
-      price: "$29.99",
-      stock: 0,
-      status: "Out of Stock",
-      image: "/placeholder.svg?height=50&width=50",
-    },
-    {
-      id: "PRD-008",
-      name: "Keyboard",
-      category: "Electronics",
-      price: "$59.99",
-      stock: 23,
-      status: "In Stock",
-      image: "/placeholder.svg?height=50&width=50",
-    },
-  ]
+  useEffect(() => {
+    fetchListings().then(data => setListings(data)).catch(console.error)
+  }, [])
 
   const getStatusBadge = (status) => {
     switch (status) {
@@ -127,16 +61,14 @@ export default function Listings() {
                       <th scope="col">Name</th>
                       <th scope="col">Price</th>
                       <th scope="col">Stock</th>
-                      <th scope="col">Status</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {Listings.map((product) => (
+                    {listings.map((product) => (
                       <tr key={product.id}>
                         <td>{product.id}</td>
-                        <td>{product.name}</td>
+                        <td>{product.title}</td>
                         <td>{product.price}</td>
-                        <td>{product.stock}</td>
                         <td>
                           <span className={getStatusBadge(product.status)}>{product.status}</span>
                         </td>

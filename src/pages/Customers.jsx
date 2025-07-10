@@ -1,85 +1,14 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
-import { useState } from "react"
+import { fetchUsers } from "../api/api"
 
 export default function Customers() {
   const [selectedCustomer, setSelectedCustomer] = useState(null)
+  const [customers, setCustomers] = useState([])
 
-  // Sample customers data
-  const customers = [
-    {
-      id: "CUST-001",
-      name: "Olivia Martin",
-      email: "olivia.martin@email.com",
-      phone: "+1 (555) 123-4567",
-      orders: 12,
-      spent: "$1,248.42",
-      lastOrder: "2023-06-12",
-      status: "active",
-      address: "123 Main St, Anytown, CA 12345",
-      joinDate: "2022-03-15",
-    },
-    {
-      id: "CUST-002",
-      name: "Jackson Lee",
-      email: "jackson.lee@email.com",
-      phone: "+1 (555) 234-5678",
-      orders: 8,
-      spent: "$879.99",
-      lastOrder: "2023-06-11",
-      status: "active",
-      address: "456 Oak Ave, Somewhere, NY 67890",
-      joinDate: "2022-05-22",
-    },
-    {
-      id: "CUST-003",
-      name: "Isabella Nguyen",
-      email: "isabella.nguyen@email.com",
-      phone: "+1 (555) 345-6789",
-      orders: 15,
-      spent: "$2,156.75",
-      lastOrder: "2023-06-10",
-      status: "active",
-      address: "789 Pine Rd, Elsewhere, TX 54321",
-      joinDate: "2021-11-08",
-    },
-    {
-      id: "CUST-004",
-      name: "William Kim",
-      email: "will@email.com",
-      phone: "+1 (555) 456-7890",
-      orders: 5,
-      spent: "$432.85",
-      lastOrder: "2023-06-09",
-      status: "active",
-      address: "321 Elm St, Nowhere, FL 13579",
-      joinDate: "2023-01-30",
-    },
-    {
-      id: "CUST-005",
-      name: "Sofia Davis",
-      email: "sofia.davis@email.com",
-      phone: "+1 (555) 567-8901",
-      orders: 3,
-      spent: "$129.97",
-      lastOrder: "2023-06-08",
-      status: "inactive",
-      address: "654 Maple Dr, Anywhere, WA 24680",
-      joinDate: "2023-04-12",
-    },
-    {
-      id: "CUST-006",
-      name: "Ethan Johnson",
-      email: "ethan.j@email.com",
-      phone: "+1 (555) 678-9012",
-      orders: 7,
-      spent: "$756.23",
-      lastOrder: "2023-06-07",
-      status: "active",
-      address: "987 Cedar Ln, Someplace, IL 97531",
-      joinDate: "2022-09-18",
-    },
-  ]
+  useEffect(() => {
+    fetchUsers().then(data => setCustomers(data)).catch(console.error)
+  }, [])
 
   const getStatusBadge = (status) => {
     switch (status) {

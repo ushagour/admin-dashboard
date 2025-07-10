@@ -1,38 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { DollarSign, Package, ShoppingCart, Users, TrendingUp, TrendingDown } from "lucide-react"
 
-const stats = [
-  {
-    title: "Total Revenue",
-    value: "$45,231.89",
-    change: "+20.1%",
-    changeType: "positive",
-    icon: DollarSign,
-  },
-  {
-    title: "Total Orders",
-    value: "2,350",
-    change: "+180.1%",
-    changeType: "positive",
-    icon: ShoppingCart,
-  },
-  {
-    title: "Listings",
-    value: "1,234",
-    change: "+19%",
-    changeType: "positive",
-    icon: Package,
-  },
-  {
-    title: "Active Customers",
-    value: "573",
-    change: "+201",
-    changeType: "positive",
-    icon: Users,
-  },
-]
 
-export function StatsCards() {
+
+export function StatsCards(stats = []) {
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat) => (
