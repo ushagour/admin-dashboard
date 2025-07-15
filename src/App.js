@@ -7,7 +7,7 @@ import Login from './pages/auth/Login';
 import Profile from './pages/auth/Profile';
 import Customers from './pages/Customers';
 import Orders from './pages/Orders';
-import Settings from './pages/Settings';
+import Categories from './pages/Categories';
 import Reclamations from './pages/Reclamations';
 import Listings from './pages/listings/Listings';
 
@@ -21,7 +21,7 @@ function App() {
               <Route index element={<Dashboard />} />
               <Route  path='/Customers'   element={<Customers />} />
               <Route  path='/Orders'   element={<Orders />} />
-              <Route  path='/Settings'   element={<Settings />} />
+              <Route  path='/Categories'   element={<Categories />} />
               <Route  path='/Listings'   element={<Listings />} />
               <Route  path='/Reclamations'   element={<Reclamations />} />
               <Route  path='/Profile'   element={<Profile />} />

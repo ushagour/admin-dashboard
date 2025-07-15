@@ -21,7 +21,17 @@ export  default function TopListings() {
             <div className="card-body">
               {topListings.map((product, index) => (
                 <div key={index} className="d-flex align-items-center mb-3">
-                  <div className="bg-light rounded p-2 me-3">📦</div>
+                  <div className="bg-light rounded p-2 me-3">
+                    
+                          <img
+                            src={product.imageUrl || "/placeholder.png"}
+                            alt={product.title}
+                            style={{ width: 48, height: 48, objectFit: "cover", borderRadius: 6 }}
+                          />
+             
+                    
+                    
+                    </div>
                   <div className="flex-grow-1">
                     <h6 className="mb-1">{product.title}</h6>
                     <div className="progress" style={{ height: "6px" }}>

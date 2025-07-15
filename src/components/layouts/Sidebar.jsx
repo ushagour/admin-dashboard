@@ -32,7 +32,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               <Link className="nav-link text-white-50"  to="/"> 🏠 Dashboard</Link >
               <Link className="nav-link text-white-50"  to="/orders">  🛒 Orders</Link>
               <Link className="nav-link text-white-50"  to="/listings "> 📦 Listings</Link>
-              <Link className="nav-link text-white-50"  to="/settings"> ⚙️ Settings</Link>
+              <Link className="nav-link text-white-50"  to="/Categories"> ⚙️ Categories</Link>
               <Link className="nav-link text-white-50"  to="/customers"> 👥 Customers</Link>
               <Link className="nav-link text-white-50"  to="/Reclamations"> 📊 Reclamations</Link>
               {/* <Link className="nav-link text-white-50"  to="/users"> 👤 Users </Link> */}

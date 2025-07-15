@@ -58,6 +58,7 @@ export default function Listings() {
                   <thead>
                     <tr>
                       <th scope="col">Product ID</th>
+                      <th scope="col">Image</th>
                       <th scope="col">Name</th>
                       <th scope="col">Price</th>
                       <th scope="col">Stock</th>
@@ -66,9 +67,17 @@ export default function Listings() {
                   <tbody>
                     {listings.map((product) => (
                       <tr key={product.id}>
-                        <td>{product.id}</td>
+                               <td>{product.id}</td>
+                        <td>
+                          <img
+                            src={product.imageUrl || "/placeholder.png"}
+                            alt={product.title}
+                            style={{ width: 48, height: 48, objectFit: "cover", borderRadius: 6 }}
+                          />
+                        </td>
+                 
                         <td>{product.title}</td>
-                        <td>{product.price}</td>
+                        <td>{product.price} $</td>
                         <td>
                           <span className={getStatusBadge(product.status)}>{product.status}</span>
                         </td>
