@@ -3,6 +3,16 @@
 Welcome to the **Jib o Bi3** admin dashboard! This dashboard helps you manage listings, users, and more for your mobile app.
 
 
+---
+
+## 📸 Dashboard Screenshot
+
+![Dashboard Screenshot](./public/dashboard-screenshot.png)
+
+---
+
+
+
 ~~~
 src/
 ├── api/                  # API calls (axios)
@@ -25,12 +35,6 @@ src/
 │   └── global.css
 └── App.js
 ~~~
-
-
-
-
-
-
 
 
 ## 🚀 Key Pages
