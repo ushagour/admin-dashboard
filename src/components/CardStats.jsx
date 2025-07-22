@@ -1,6 +1,8 @@
 import React from "react";
+import getChange from "../helper/GetChange";
 
 export default function CardStats({ stats = [] }) {
+  
   return (
     <div className="row">
       {stats.map((stat, index) => (
@@ -13,7 +15,7 @@ export default function CardStats({ stats = [] }) {
               </div>
               <h3 className="mb-1">{stat.value}</h3>
               <small className={`text-${stat.changeType}`}>
-                📈 {stat.change} from last month
+                📈 { getChange(stat.current,stat.previous)} from last month
               </small>
             </div>
           </div>

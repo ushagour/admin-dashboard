@@ -62,6 +62,8 @@ export default function Listings() {
                       <th scope="col">Name</th>
                       <th scope="col">Price</th>
                       <th scope="col">Stock</th>
+                      <th scope="col">Location</th>
+                      <th scope="col">Messages</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -80,6 +82,16 @@ export default function Listings() {
                         <td>{product.price} $</td>
                         <td>
                           <span className={getStatusBadge(product.status)}>{product.status}</span>
+                        </td>
+                        <td>
+                          {product.latitude && product.longitude
+                            ? `${product.latitude.toFixed(3)}, ${product.longitude.toFixed(3)}`
+                            : "—"}
+                        </td>
+                        <td>
+                          {product.Messages && Array.isArray(product.Messages)
+                            ? product.Messages.length
+                            : product.messagesCount || 0}
                         </td>
                       </tr>
                     ))}

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://192.168.0.176:9001/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://192.168.1.54:9001/api';
 
 
 
@@ -76,3 +76,23 @@ export const fetchTopListings = async () => {
   });
   return response.data;
 };
+export const fetchStats = async () => {
+  const token = localStorage.getItem('token');
+  const response = await axios.get(`${API_URL}/stats`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};
+
+// fetch messages 
+export const fetchMessages = async () => {
+  const token = localStorage.getItem('token');
+  const response = await axios.get(`${API_URL}/messages`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};
+
+
+
+

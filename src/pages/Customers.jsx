@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { fetchUsers } from "../api/api"
-
+import  ChangeDateFormat  from "../helper/ChangeDateFormat"
 export default function Customers() {
   const [selectedCustomer, setSelectedCustomer] = useState(null)
   const [customers, setCustomers] = useState([])
@@ -68,10 +68,17 @@ export default function Customers() {
                       <td>
                         <span className={getStatusBadge(customer.status)}>{customer.status}</span>
                       </td>
-                      <td>{customer.orders}</td>
+                      <td>{customer.Orders.length}</td>
                       <td>{customer.spent}</td>
-                      <td>{customer.lastOrder}</td>
-                      <td>
+<td>
+  {customer.Orders.length > 0
+    ? ChangeDateFormat(
+        customer.Orders.reduce((latest, order) =>
+          new Date(order.createdAt) > new Date(latest.createdAt) ? order : latest
+        ).createdAt
+      )
+    : "—"}
+</td>                      <td>
                         <button
                           className="btn btn-sm btn-outline-primary me-2"
                           onClick={() => setSelectedCustomer(customer)}
@@ -187,10 +194,10 @@ export default function Customers() {
                       <span className={getStatusBadge(selectedCustomer.status)}>{selectedCustomer.status}</span>
                     </p>
                     <p className="mb-1">
-                      <strong>Join Date:</strong> {selectedCustomer.joinDate}
+                      <strong>Join Date:</strong> { ChangeDateFormat(selectedCustomer.createdAt) }
                     </p>
                     <p className="mb-1">
-                      <strong>Total Orders:</strong> {selectedCustomer.orders}
+                      <strong>Total Orders:</strong> {selectedCustomer.Orders.length}
                     </p>
                     <p className="mb-1">
                       <strong>Total Spent:</strong> {selectedCustomer.spent}
@@ -202,27 +209,23 @@ export default function Customers() {
                   <div className="col-12">
                     <h6>Recent Activity</h6>
                     <div className="list-group">
-                      <div className="list-group-item">
-                        <div className="d-flex w-100 justify-content-between">
-                          <h6 className="mb-1">Placed order #3210</h6>
-                          <small>2 days ago</small>
-                        </div>
-                        <p className="mb-1">Order total: $42.25</p>
-                      </div>
-                      <div className="list-group-item">
-                        <div className="d-flex w-100 justify-content-between">
-                          <h6 className="mb-1">Updated shipping address</h6>
-                          <small>5 days ago</small>
-                        </div>
-                        <p className="mb-1">Changed shipping address details</p>
-                      </div>
-                      <div className="list-group-item">
-                        <div className="d-flex w-100 justify-content-between">
-                          <h6 className="mb-1">Placed order #3195</h6>
-                          <small>2 weeks ago</small>
-                        </div>
-                        <p className="mb-1">Order total: $79.99</p>
-                      </div>
+                      {selectedCustomer.Orders && selectedCustomer.Orders.length > 0 ? (
+        selectedCustomer.Orders
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .slice(0, 5) // Show up to 5 recent orders
+          .map(order => (
+            <div className="list-group-item" key={order.id}>
+              <div className="d-flex w-100 justify-content-between">
+                <h6 className="mb-1">Placed order #{order.id}</h6>
+                <small>{ChangeDateFormat(order.createdAt)}</small>
+              </div>
+              <p className="mb-1">Order total: ${order.total_price}</p>
+              <span className={getStatusBadge(order.status)}>{order.status}</span>
+            </div>
+          ))
+      ) : (
+        <div className="list-group-item text-muted">No recent orders found.</div>
+      )}
                     </div>
                   </div>
                 </div>

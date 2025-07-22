@@ -8,7 +8,7 @@ import Profile from './pages/auth/Profile';
 import Customers from './pages/Customers';
 import Orders from './pages/Orders';
 import Categories from './pages/Categories';
-import Reclamations from './pages/Reclamations';
+import Reviews from './pages/Reviews';
 import Listings from './pages/listings/Listings';
 
 
@@ -23,7 +23,7 @@ function App() {
               <Route  path='/Orders'   element={<Orders />} />
               <Route  path='/Categories'   element={<Categories />} />
               <Route  path='/Listings'   element={<Listings />} />
-              <Route  path='/Reclamations'   element={<Reclamations />} />
+              <Route  path='/Reviews'   element={<Reviews />} />
               <Route  path='/Profile'   element={<Profile />} />
               {/* other routes */}
             </Route>

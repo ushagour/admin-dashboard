@@ -34,7 +34,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               <Link className="nav-link text-white-50"  to="/listings "> 📦 Listings</Link>
               <Link className="nav-link text-white-50"  to="/Categories"> ⚙️ Categories</Link>
               <Link className="nav-link text-white-50"  to="/customers"> 👥 Customers</Link>
-              <Link className="nav-link text-white-50"  to="/Reclamations"> 📊 Reclamations</Link>
+              <Link className="nav-link text-white-50"  to="/reviews"> 📊 Reviews & Messages</Link>
               {/* <Link className="nav-link text-white-50"  to="/users"> 👤 Users </Link> */}
 
             </nav>
