@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import Search from '../forms/Search'
 import axios from 'axios'
+import { NotificationBell } from '../ui';
+import { useAuth } from '../../hooks/useAuth';
 
 function Header({sidebarOpen, setSidebarOpen}) {
   const [notifications, setNotifications] = useState([])
   const [loading, setLoading] = useState(true)
+  const { user,logout } = useAuth();
+
+ 
 
   useEffect(() => {
     // Fetch messages and reclamations in parallel
     const fetchNotifications = async () => {
       try {
+        // const userId = localStorage.getItem('userId'); // Or get userId from your auth context/state
+        const userId = 25// Or get userId from your auth context/state
+
         const token = localStorage.getItem('token')
         const [messagesRes, reclamationsRes] = await Promise.all([
-          axios.get('/api/messages/unread', { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get('/api/reclamations/unread', { headers: { Authorization: `Bearer ${token}` } }),
-        ])
+        axios.get(`/api/messages/unread?userId=${userId}`, { headers: { Authorization: `Bearer ${token}` } }),
+        axios.get(`/api/reclamations/unread?userId=${userId}`, { headers: { Authorization: `Bearer ${token}` } }),
+      ]);
         // Combine and sort by date (assuming both have a createdAt field)
         const combined = [
           ...messagesRes.data.map(msg => ({ ...msg, type: 'message' })),
@@ -105,12 +113,13 @@ function Header({sidebarOpen, setSidebarOpen}) {
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
-                    Logout
-                  </a>
+              <button className="dropdown-item" onClick={logout}>
+  Logout
+</button>
                 </li>
               </ul>
             </div>
+            <NotificationBell count={0} />
           </div>
         </div>
       </div>

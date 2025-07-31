@@ -2,10 +2,15 @@
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import { useState } from "react"
+import { useAuth } from '../../hooks/useAuth';
+
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
+
+  const { login: LoginAPI, register: RegisterAPI } = useAuth()
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -14,6 +19,7 @@ export default function Login() {
     lastName: "",
     rememberMe: false,
   })
+  const [error, setError] = useState("")
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -23,10 +29,32 @@ export default function Login() {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Handle login/register logic here
-    console.log("Form submitted:", formData)
+    setError("")
+    try {
+      if (isLogin) {
+        LoginAPI(formData.email, formData.password)
+        
+      } else {
+        if (formData.password !== formData.confirmPassword) {
+          setError('Passwords do not match')
+          return
+        }
+        const data = await RegisterAPI({
+          email: formData.email,
+          password: formData.password,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+        })
+        // Optionally auto-login or show success message
+      }
+    } catch (err) {
+      console.log(err);
+      
+      setError(err.response?.data?.message || 'Authentication failed')
+
+    }
   }
 
   return (
@@ -40,11 +68,10 @@ export default function Login() {
                 <div className="text-center mb-4">
                   <div
                     className="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                    style={{ width: "60px", height: "60px" }}
+                   
                   >
-                    <span style={{ fontSize: "24px" }}>📦</span>
+                  <img  style={{ width: "60px", height: "60px" }} src="./JIBOBI3_LOGO.png" alt="LOGO"/>
                   </div>
-                  <h2 className="fw-bold text-dark">SellerPro</h2>
                   <p className="text-muted">{isLogin ? "Sign in to your dashboard" : "Create your seller account"}</p>
                 </div>
 
@@ -66,6 +93,7 @@ export default function Login() {
 
                 {/* Form */}
                 <form onSubmit={handleSubmit}>
+                  {error && <div className="alert alert-danger">{error}</div>}
                   {/* Register Fields */}
                   {!isLogin && (
                     <div className="row mb-3">
@@ -244,7 +272,7 @@ export default function Login() {
             </div>
 
             {/* Demo Credentials */}
-            <div className="card mt-3 bg-light border-0">
+            {/* <div className="card mt-3 bg-light border-0">
               <div className="card-body p-3">
                 <h6 className="card-title mb-2">Demo Credentials</h6>
                 <div className="row">
@@ -258,7 +286,7 @@ export default function Login() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

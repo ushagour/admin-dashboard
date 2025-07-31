@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchRecentOrders } from "../../api/api";
+import { fetchRecentOrders } from "../../api/orders";
 import React from "react";
 import ChangeDateFormat from "../../helper/ChangeDateFormat";
 

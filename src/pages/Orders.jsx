@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect } from "react";
-import { fetchOrders } from "../api/api";
+import { fetchOrders } from "../api/orders";
 import ChangeDateFormat from "../helper/ChangeDateFormat";
 
 export default function Orders() {

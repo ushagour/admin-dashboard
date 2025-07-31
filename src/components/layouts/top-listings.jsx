@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { fetchTopListings }  from '../../api/api';
+import { fetchTopListings }  from '../../api/listings';
 
 export  default function TopListings() {
   const [topListings, setTopListings] = useState([])

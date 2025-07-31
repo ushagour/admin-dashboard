@@ -1,24 +1,28 @@
-import { useState, useCallback } from "react";
+import { useState, useEffect } from 'react';
 
-export function useApi(apiFunc) {
+export function useApi(apiFunc, params = []) {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
 
-  const request = useCallback(async (...args) => {
+  useEffect(() => {
+    let isMounted = true;
     setLoading(true);
     setError(null);
-    try {
-      const result = await apiFunc(...args);
-      setData(result);
-      return result;
-    } catch (err) {
-      setError(err);
-      return null;
-    } finally {
-      setLoading(false);
-    }
-  }, [apiFunc]);
+    apiFunc(...params)
+      .then((res) => {
+        if (isMounted) setData(res);
+      })
+      .catch((err) => {
+        if (isMounted) setError(err);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, params);
 
-  return { data, error, loading, request };
+  return { data, loading, error };
 }

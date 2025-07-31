@@ -2,12 +2,29 @@
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import { useState, useEffect } from "react"
-import { fetchListings } from "../../api/api"
+import { fetchListings } from "../../api/listings"
+import CrudModal from '../../components/ui/CrudModal';
 
 export default function Listings() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [showAddModal, setShowAddModal] = useState(false)
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedListing, setSelectedListing] = useState(null);
   const [listings, setListings] = useState([])
+
+  // Handlers for opening/closing modals
+  const openAddModal = () => setShowAddModal(true);
+  const closeAddModal = () => setShowAddModal(false);
+  const openEditModal = (listing) => { setSelectedListing(listing); setShowEditModal(true); };
+  const closeEditModal = () => { setSelectedListing(null); setShowEditModal(false); };
+  const openDeleteModal = (listing) => { setSelectedListing(listing); setShowDeleteModal(true); };
+  const closeDeleteModal = () => { setSelectedListing(null); setShowDeleteModal(false); };
+
+  // Handlers for CRUD actions (to be implemented)
+  const handleAdd = (e) => { e.preventDefault(); /* TODO: Add listing */ closeAddModal(); };
+  const handleEdit = (e) => { e.preventDefault(); /* TODO: Edit listing */ closeEditModal(); };
+  const handleDelete = (e) => { e.preventDefault(); /* TODO: Delete listing */ closeDeleteModal(); };
 
   useEffect(() => {
     fetchListings().then(data => setListings(data)).catch(console.error)
@@ -45,7 +62,7 @@ export default function Listings() {
               <button className="btn btn-outline-secondary me-2">
                 <span className="me-1">🔄</span> Refresh
               </button>
-              <button className="btn btn-primary" onClick={() => setShowAddModal(true)}>
+              <button className="btn btn-primary" onClick={openAddModal}>
                 <span className="me-1">➕</span> Add Listing
               </button>
             </div>
@@ -129,73 +146,15 @@ export default function Listings() {
       </div>
 
       {/* Add Product Modal */}
-      {showAddModal && (
-        <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Add New Product</h5>
-                <button type="button" className="btn-close" onClick={() => setShowAddModal(false)}></button>
-              </div>
-              <div className="modal-body">
-                <form>
-                  <div className="mb-3">
-                    <label htmlFor="productName" className="form-label">
-                      Product Name
-                    </label>
-                    <input type="text" className="form-control" id="productName" />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="category" className="form-label">
-                      Category
-                    </label>
-                    <select className="form-select" id="category">
-                      <option>Electronics</option>
-                      <option>Accessories</option>
-                      <option>Clothing</option>
-                      <option>Home & Kitchen</option>
-                    </select>
-                  </div>
-                  <div className="row mb-3">
-                    <div className="col">
-                      <label htmlFor="price" className="form-label">
-                        Price
-                      </label>
-                      <input type="text" className="form-control" id="price" placeholder="$0.00" />
-                    </div>
-                    <div className="col">
-                      <label htmlFor="stock" className="form-label">
-                        Stock
-                      </label>
-                      <input type="number" className="form-control" id="stock" placeholder="0" />
-                    </div>
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="description" className="form-label">
-                      Description
-                    </label>
-                    <textarea className="form-control" id="description" rows="3"></textarea>
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="productImage" className="form-label">
-                      Product Image
-                    </label>
-                    <input type="file" className="form-control" id="productImage" />
-                  </div>
-                </form>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setShowAddModal(false)}>
-                  Cancel
-                </button>
-                <button type="button" className="btn btn-primary">
-                  Add Product
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <CrudModal show={showAddModal} title="Add Listing" onClose={closeAddModal} onSubmit={handleAdd} submitLabel="Add">
+        {/* Add listing form fields here */}
+      </CrudModal>
+      <CrudModal show={showEditModal} title="Edit Listing" onClose={closeEditModal} onSubmit={handleEdit} submitLabel="Save">
+        {/* Edit listing form fields here, prefill with selectedListing */}
+      </CrudModal>
+      <CrudModal show={showDeleteModal} title="Delete Listing" onClose={closeDeleteModal} onSubmit={handleDelete} submitLabel="Delete">
+        <p>Are you sure you want to delete this listing?</p>
+      </CrudModal>
     </div>
   )
 }

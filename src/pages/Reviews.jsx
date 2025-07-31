@@ -2,7 +2,7 @@
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect } from "react";
-import { fetchReviews, fetchMessages } from "../api/api";
+import { fetchReviews, fetchMessages } from "../api/";
 import ChangeDateFormat from "../helper/ChangeDateFormat";
 
 export default function Reviews() {

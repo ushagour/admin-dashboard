@@ -1,14 +1,42 @@
 import React, { useEffect, useState } from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
-import { fetchUsers } from "../api/api"
+import { useApi } from '../hooks/useApi';
+import { SearchBar, Loader, ErrorMessage } from '../components/ui';
+import { fetchUsers, fetchCompletedOrders } from '../api/users';
 import  ChangeDateFormat  from "../helper/ChangeDateFormat"
 export default function Customers() {
+  const { data: customers, loading, error } = useApi(fetchUsers, []);
+  const [search, setSearch] = useState('');
   const [selectedCustomer, setSelectedCustomer] = useState(null)
-  const [customers, setCustomers] = useState([])
+  const [completedOrders, setCompletedOrders] = useState({})
 
   useEffect(() => {
-    fetchUsers().then(data => setCustomers(data)).catch(console.error)
-  }, [])
+    // Ensure customers is an array
+    const filteredCustomers = Array.isArray(customers)
+      ? customers.filter(c => c.name.toLowerCase().includes(search.toLowerCase()))
+      : [];
+
+    // Fetch completed orders count for each customer
+    const fetchOrdersCount = async () => {
+      const ordersCount = {};
+      for (const customer of filteredCustomers) {
+        try {
+          const count = await fetchCompletedOrders(customer.id);
+          ordersCount[customer.id] = count.completedOrders;
+        } catch (error) {
+          console.error(`Failed to fetch completed orders for user ${customer.id}`, error);
+          ordersCount[customer.id] = 0;
+        }
+      }
+      setCompletedOrders(ordersCount);
+    };
+    if (filteredCustomers.length > 0) {
+      fetchOrdersCount();
+    }
+  }, [Array.isArray(customers) ? customers.length : 0, search]) // Re-fetch when customers list changes or search changes
+
+
+
 
   const getStatusBadge = (status) => {
     switch (status) {
@@ -21,10 +49,19 @@ export default function Customers() {
     }
   }
 
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage error={error} />;
+
+  // Filter customers by search
+  const filteredCustomers = Array.isArray(customers)
+    ? customers.filter(c => c.name.toLowerCase().includes(search.toLowerCase()))
+    : [];
+
   return (
     <div className="flex-grow-1">
       {/* Customers Content */}
       <div className="container-fluid p-4">
+        <SearchBar value={search} onChange={setSearch} placeholder="Search customers..." />
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2 className="mb-0">Customers</h2>
           <div>
@@ -47,16 +84,14 @@ export default function Customers() {
                 <thead>
                   <tr>
                     <th scope="col">Customer</th>
-                    <th scope="col">ID</th>
-                    <th scope="col">Status</th>
+                    <th scope="col">avatar</th>
                     <th scope="col">Orders</th>
-                    <th scope="col">Spent</th>
                     <th scope="col">Last Order</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {customers.map((customer) => (
+                  {filteredCustomers.map((customer) => (
                     <tr key={customer.id}>
                       <td>
                         <div>
@@ -64,12 +99,16 @@ export default function Customers() {
                           <div className="small text-muted">{customer.email}</div>
                         </div>
                       </td>
-                      <td>{customer.id}</td>
-                      <td>
-                        <span className={getStatusBadge(customer.status)}>{customer.status}</span>
-                      </td>
+                       <td>
+                          <img
+                            src={customer.avatar || "/placeholder.png"}
+                            alt={customer.id}
+                            style={{ width: 48, height: 48, objectFit: "cover", borderRadius: 6 }}
+                          />
+                        </td>                  
+                      
                       <td>{customer.Orders.length}</td>
-                      <td>{customer.spent}</td>
+                      {/* <td>{completedOrders.completedOrders}</td> */}
 <td>
   {customer.Orders.length > 0
     ? ChangeDateFormat(
@@ -78,7 +117,8 @@ export default function Customers() {
         ).createdAt
       )
     : "—"}
-</td>                      <td>
+</td>                    
+                       <td>
                         <button
                           className="btn btn-sm btn-outline-primary me-2"
                           onClick={() => setSelectedCustomer(customer)}

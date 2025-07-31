@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
+import {useAuth} from "../../hooks/useAuth"; // Assuming you have a user context or hook to get user info
 
 
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
+
+  const { user } = useAuth(); // Get user info from auth context or hook
 
   return (
     <div
@@ -23,7 +26,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               </div>
               <div>
                 <h5 className="mb-0">JIB O BI3 </h5>
-                <small className="text">Dashboard</small>
+                <small className="text">welcome mr {user?.name} </small>
               </div>
             </div>
 

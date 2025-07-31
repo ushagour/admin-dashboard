@@ -1,25 +1,17 @@
 import React, { useEffect,useState } from 'react';
 import { useApi } from '../hooks/useApi';
-import { fetchStats} from '../api/api';
+import { fetchStats } from '../api/stats';
+import { Loader, ErrorMessage } from '../components/ui';
 import CardStats from '../components/CardStats';
 import RecentOrders from '../components/layouts/RecentOrders';
 import TopListings from '../components/layouts/top-listings';
 
 export default function Dashboard() {
-  // Fetch data using custom hooks
+  const { data: stats, loading, error } = useApi(fetchStats, []);
 
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage error={error} />;
 
-  const [stats, setStats] = useState([])
-
-  useEffect(() => {
-    fetchStats().then(data => setStats(data)).catch(console.error)
-  }, [])
-
-
-
-  
-
-  
 
   const getStatusBadge = (status) => {
     switch (status) {

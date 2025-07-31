@@ -10,27 +10,37 @@ import Orders from './pages/Orders';
 import Categories from './pages/Categories';
 import Reviews from './pages/Reviews';
 import Listings from './pages/listings/Listings';
+import { AuthProvider } from './hooks/useAuth';
+import { ProtectedRoute } from './components/ui';
+import ListingDetail from './pages/listings/ListingDetail';
+import CategoriesDetail from './pages/CategoriesDetail';
+import CustomerDetail from './pages/CustomerDetail';
 
 
 function App() {
 
   return (
-    <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<MainLayout />}>
-              <Route index element={<Dashboard />} />
-              <Route  path='/Customers'   element={<Customers />} />
-              <Route  path='/Orders'   element={<Orders />} />
-              <Route  path='/Categories'   element={<Categories />} />
-              <Route  path='/Listings'   element={<Listings />} />
-              <Route  path='/Reviews'   element={<Reviews />} />
-              <Route  path='/Profile'   element={<Profile />} />
-              {/* other routes */}
-            </Route>
-            {/* routes without layout, e.g. login */}
-            <Route path="/login" element={<Login />} />
-       </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+          <Routes>
+              <Route path="/" element={<MainLayout />}>
+                <Route index element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                <Route path='/Customers' element={<ProtectedRoute><Customers /></ProtectedRoute>} />
+                <Route path='/Customers/:id' element={<ProtectedRoute><CustomerDetail /></ProtectedRoute>} />
+                <Route path='/Orders' element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+                <Route path='/Categories' element={<ProtectedRoute><Categories /></ProtectedRoute>} />
+                <Route path='/Categories/:id' element={<ProtectedRoute><CategoriesDetail /></ProtectedRoute>} />
+                <Route path='/Listings' element={<ProtectedRoute><Listings /></ProtectedRoute>} />
+                <Route path='/Listings/:id' element={<ProtectedRoute><ListingDetail /></ProtectedRoute>} />
+                <Route path='/Reviews' element={<ProtectedRoute><Reviews /></ProtectedRoute>} />
+                <Route path='/Profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                {/* other routes */}
+              </Route>
+              {/* routes without layout, e.g. login */}
+              <Route path="/login" element={<Login />} />
+         </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
