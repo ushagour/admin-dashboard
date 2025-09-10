@@ -1,53 +1,83 @@
 import { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
-import {useAuth} from "../../hooks/useAuth"; // Assuming you have a user context or hook to get user info
-
-
+import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import './Sidebar.css';
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
+  const { user, logout } = useAuth();
+  const location = useLocation();
 
-  const { user } = useAuth(); // Get user info from auth context or hook
+  // Helper function to check if a link is active
+  const isActive = (path) => {
+    if (path === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname.startsWith(path);
+  };
+
+  // Helper function to get link classes
+  const getLinkClasses = (path) => {
+    const baseClasses = "nav-link text-white-50 sidebar-nav-link";
+    return isActive(path) 
+      ? `${baseClasses} active` 
+      : baseClasses;
+  };
 
   return (
     <div
-        className={`bg-dark text-white ${sidebarOpen ? "d-block" : "d-none d-lg-block"}`}
-        style={{ width: "250px", minHeight: "100vh" }}
-      >
-        <div className="d-flex flex-column h-100 p-3">
-          <div>
-            <div className="d-flex align-items-center mb-4">
-              <div className="bg-primary rounded p-2 me-2">
-                <img
-                  src="/JIBOBI3_LOGO.png"//  you can access to public folder in react app
-                  alt="Logo"
-                  className="img-fluid"
-                  style={{ width: "40px", height: "40px" }}
-                />
-              </div>
-              <div>
-                <h5 className="mb-0">JIB O BI3 </h5>
-                <small className="text">welcome mr {user?.name} </small>
-              </div>
+      className={`bg-dark text-white ${sidebarOpen ? "d-block" : "d-none d-lg-block"}`}
+      style={{ width: "250px", minHeight: "100vh" }}
+    >
+      <div className="d-flex flex-column h-100 p-3">
+        <div>
+          <div className="d-flex align-items-center mb-4">
+            <div className="bg-primary rounded p-2 me-2">
+              <img
+                src="/JIBOBI3_LOGO.png"
+                alt="Logo"
+                className="img-fluid"
+                style={{ width: "40px", height: "40px" }}
+              />
             </div>
-
-            <nav className="nav flex-column">
+            <div>
+              <h5 className="mb-0">JIB O BI3</h5>
+              <small className="">Welcome, {user?.name || 'Admin'}</small>
               
-              <Link className="nav-link text-white-50"  to="/"> 🏠 Dashboard</Link >
-              <Link className="nav-link text-white-50"  to="/orders">  🛒 Orders</Link>
-              <Link className="nav-link text-white-50"  to="/listings "> 📦 Listings</Link>
-              <Link className="nav-link text-white-50"  to="/Categories"> ⚙️ Categories</Link>
-              <Link className="nav-link text-white-50"  to="/customers"> 👥 Customers</Link>
-              <Link className="nav-link text-white-50"  to="/reviews"> 📊 Reviews & Messages</Link>
-              {/* <Link className="nav-link text-white-50"  to="/users"> 👤 Users </Link> */}
-
-            </nav>
-
-            <div className="mt-4">
-              <button className="btn btn-primary w-100">➕ Add Product</button>
             </div>
           </div>
-    
+
+          <nav className="nav flex-column">
+            <Link className={getLinkClasses('/')} to="/">
+              🏠 Dashboard
+            </Link>
+            
+            <Link className={getLinkClasses('/Orders')} to="/Orders">
+              🛒 Orders
+            </Link>
+            
+            <Link className={getLinkClasses('/Listings')} to="/Listings">
+              📦 Listings
+            </Link>
+            
+            <Link className={getLinkClasses('/Categories')} to="/Categories">
+              ⚙️ Categories
+            </Link>
+            
+            <Link className={getLinkClasses('/Customers')} to="/Customers">
+              👥 Customers
+            </Link>
+            
+            <Link className={getLinkClasses('/Reviews')} to="/Reviews">
+              📊 Reviews & Messages
+            </Link>
+          </nav>
+
+          
+
+
+            </div>
+          </div> 
         </div>
-      </div>
+  
   );
 }

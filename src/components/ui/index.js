@@ -6,4 +6,7 @@ export { default as NotificationBell } from './NotificationBell';
 export { default as SearchBar } from './SearchBar';
 export { default as Pagination } from './Pagination';
 export { default as NotFound } from './NotFound';
-export { default as Unauthorized } from './Unauthorized'; 
+export { default as Unauthorized } from './Unauthorized';
+export { default as CrudModal } from './CrudModal';
+export { default as Toast } from './Toast';
+export { default as ConfirmationModal } from './ConfirmationModal'; 

@@ -1,9 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export function useApi(apiFunc, params = []) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [reloadFlag, setReloadFlag] = useState(0);
+
+  const refetch = useCallback(() => {
+    setReloadFlag((flag) => flag + 1);
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -22,7 +27,7 @@ export function useApi(apiFunc, params = []) {
     return () => {
       isMounted = false;
     };
-  }, params);
+  }, [...params, reloadFlag]);
 
-  return { data, loading, error };
+  return { data, loading, error, refetch };
 }
