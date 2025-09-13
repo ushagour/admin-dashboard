@@ -5,22 +5,26 @@ import Dashboard from './pages/Dashboard';
 import MainLayout from './components/layouts/MainLayout';
 import Login from './pages/auth/Login';
 import Profile from './pages/auth/Profile';
-import Customers from './pages/Customers';
+import Customers from './pages/customers/Customers';
 import Orders from './pages/Orders';
-import Categories from './pages/Categories';
+import Categories from './pages/categories/Categories';
 import Reviews from './pages/Reviews';
 import Listings from './pages/listings/Listings';
 import { AuthProvider } from './hooks/useAuth';
 import { ProtectedRoute } from './components/ui';
 import ListingDetail from './pages/listings/ListingDetail';
-import CategoriesDetail from './pages/CategoriesDetail';
-import CustomerDetail from './pages/CustomerDetail';
+import CategoriesDetail from './pages/categories/CategoriesDetail';
+import CustomerDetail from './pages/customers/CustomerDetail';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 function App() {
 
   return (
     <AuthProvider>
+            <ToastContainer />
+
       <BrowserRouter>
           <Routes>
               <Route path="/" element={<MainLayout />}>

@@ -6,6 +6,7 @@ import { fetchUsers, createUser, updateUser, deleteUser } from '../../api/users'
 import UserForm from '../../components/forms/UserForm';
 import ChangeDateFormat from "../../helper/ChangeDateFormat";
 import { toast } from 'react-toastify';
+import { CSVLink } from "react-csv"; // npm install react-csv
 
 export default function Customers() {
   const { data: customersData, loading, error, refetch } = useApi(fetchUsers, []);
@@ -39,10 +40,14 @@ export default function Customers() {
   const handleEdit = async (userData) => {
     try {
       await updateUser(selectedUser.id, userData);
-      closeEditModal();
+         closeEditModal();   
       // Optionally refresh data here
+      refetch(); // Refresh data
+      toast.success("Customer updated successfully!");  
     } catch (err) {
       console.error('Failed to update user:', err);
+      toast.error("Failed to  update user.", err);  
+
     }
   };
 
@@ -59,6 +64,28 @@ export default function Customers() {
     }
   };
 
+  // Export data as CSV
+  const csvHeaders = [
+    { label: "ID", key: "id" },
+    { label: "Name", key: "name" },
+    { label: "Email", key: "email" },
+    { label: "Status", key: "status" },
+    { label: "Orders", key: "ordersCount" },
+    { label: "Spent", key: "totalSpent" },
+    { label: "Last Order", key: "lastOrder" },
+  ];
+  const csvData = Array.isArray(customersData)
+    ? customersData.map(c => ({
+        id: c.id,
+        name: c.name,
+        email: c.email,
+        status: c.status,
+        ordersCount: c.ordersCount ?? 0,
+        totalSpent: c.totalSpent ?? 0,
+        lastOrder: c.lastOrder ? ChangeDateFormat(c.lastOrder) : "—",
+      }))
+    : [];
+
   if (loading) return <Loader />;
   if (error) return <ErrorMessage error={error} />;
 
@@ -73,12 +100,22 @@ export default function Customers() {
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2 className="mb-0">Customers</h2>
           <div>
-            <button className="btn btn-outline-secondary me-2">
+            <button
+              className="btn btn-outline-secondary me-2"
+              onClick={refetch}
+              title="Refresh"
+            >
               <span className="me-1">🔄</span> Refresh
             </button>
-            <button className="btn btn-outline-primary me-2">
+            <CSVLink
+              data={csvData}
+              headers={csvHeaders}
+              filename="customers.csv"
+              className="btn btn-outline-primary me-2"
+              target="_blank"
+            >
               <span className="me-1">📥</span> Export
-            </button>
+            </CSVLink>
             <button className="btn btn-primary" onClick={openAddModal}>
               <span className="me-1">➕</span> Add Customer
             </button>
@@ -143,6 +180,12 @@ export default function Customers() {
                             onClick={() => openDeleteModal(customer)}
                           >
                             Delete
+                          </button>
+                          <button
+                            className="btn btn-sm btn-outline-secondary ms-2"
+                            onClick={() => window.location.href = `/customers/${customer.id}`}
+                          >
+                            View
                           </button>
                         </td>
                       </tr>
