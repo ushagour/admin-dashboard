@@ -1,9 +1,9 @@
-export const API_URL = process.env.REACT_APP_API_URL || 'http://192.168.1.93:9001/api';
+export const API_URL = process.env.REACT_APP_API_URL || 'http://192.168.1.19:3000/api';
 
-export const getTokenHeader = () => {
-  const token = localStorage.getItem('token');
-  return token ? { headers: { Authorization: `Bearer ${token}` } } : {};
-};
+export function getTokenHeader() {
+  const token = localStorage.getItem("token");
+  return token ? { headers: { 'x-auth-token': `${token}` } } : {};
+}
 
 // Simple fetch wrapper for API calls
 export const apiFetch = async (endpoint, options = {}) => {
@@ -24,4 +24,4 @@ export const apiFetch = async (endpoint, options = {}) => {
   }
 
   return response.json();
-}; 
+};
