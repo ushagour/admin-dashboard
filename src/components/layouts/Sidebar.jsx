@@ -23,6 +23,13 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
       : baseClasses;
   };
 
+
+        const date = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              });
+
   return (
     <div
       className={`bg-dark text-white ${sidebarOpen ? "d-block" : "d-none d-lg-block"}`}
@@ -31,17 +38,19 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
       <div className="d-flex flex-column h-100 p-3">
         <div>
           <div className="d-flex align-items-center mb-4">
-            <div className="bg-primary rounded p-2 me-2">
+            <div className="rounded p-2 ">
               <img
                 src="/JIBOBI3_LOGO.png"
                 alt="Logo"
                 className="img-fluid"
-                style={{ width: "40px", height: "40px" }}
+                style={{ width: "80px", height: "auto" }} 
               />
             </div>
             <div>
               <h5 className="mb-0">JIB O BI3</h5>
-              <small className="">Welcome, {user?.name || 'Admin'}</small>
+              {/* <small className="text-white"> {date} </small> */}
+                            <br />
+
               
             </div>
           </div>
@@ -67,7 +76,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               👥 Customers
             </Link>
             
-            <Link className={getLinkClasses('/Reviews')} to="/Reviews">
+            <Link className={getLinkClasses('/ReviewsAndMessages')} to="/ReviewsAndMessages">
               📊 Reviews & Messages
             </Link>
           </nav>

@@ -23,7 +23,6 @@ export const useNotifications = (userId) => {
       ]);
 
 
-      console.log(messagesRes, reclamationsRes);
       
       const allNotifications = [];
 

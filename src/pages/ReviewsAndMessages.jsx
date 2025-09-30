@@ -2,10 +2,12 @@
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect } from "react";
-import { fetchReviews, fetchMessages } from "../api/";
+import { fetchReviews, fetchMessages } from "../api";
 import ChangeDateFormat from "../helper/ChangeDateFormat";
+import { markMessageAsRead } from '../api/messages';
 
-export default function Reviews() {
+
+export default function ReviewsAndMessages() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedReview, setSelectedReview] = useState(null);
   const [selectedMessage, setSelectedMessage] = useState(null);
@@ -13,6 +15,21 @@ export default function Reviews() {
   const [messages, setMessages] = useState([]);
   const [filterStatus, setFilterStatus] = useState("all");
 
+
+const handleMarkAsRead = async (messageId) => {
+  
+  try {
+    await markMessageAsRead(messageId);
+    
+
+
+  } catch (err) {
+    // Handle error
+    console.log(err);
+    
+  }
+};
+  
   useEffect(() => {
     fetchReviews().then((data) => setReviews(data)).catch(console.error);
     fetchMessages().then((data) => setMessages(data)).catch(console.error);
@@ -183,10 +200,12 @@ export default function Reviews() {
                     {messages.map((msg) => (
                       <tr key={msg.id}>
                         <td>{msg.id}</td>
-                        <td>{msg.toUser}</td>
                         <td>{msg.fromUser}</td>
+                        <td>{msg.toUser}</td>
                         <td>{msg.content.slice(0, 40)}...</td>
                         <td>
+
+
                           <span
                             className={
                               msg.is_read
@@ -205,6 +224,16 @@ export default function Reviews() {
                           >
                             View
                           </button>
+
+                          <button
+                        className={`btn btn-sm ${msg.is_read ? "btn-outline-success" : "btn-outline-warning"}`}
+                        disabled={msg.is_read}
+                        onClick={() => handleMarkAsRead(msg.id)}
+                        title={msg.is_read ? "Already read" : "Mark as read"}
+                      >
+                        <i className="fa fa-check2-circle me-1"></i>
+                        {msg.is_read ? "Read" : "Mark as Read"}
+                      </button>
                         </td>
                       </tr>
                     ))}
@@ -293,7 +322,7 @@ export default function Reviews() {
                   </div>
                   <div className="modal-body">
                     <p>
-                      <strong>Customer:</strong> {selectedMessage.customerName}
+                      <strong>Customer:</strong> {selectedMessage.fromUser}
                     </p>
                     <p>
                       <strong>Date:</strong> {ChangeDateFormat(selectedMessage.createdAt)}

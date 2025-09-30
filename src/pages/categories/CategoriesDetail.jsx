@@ -53,14 +53,14 @@ export default function CategoriesDetail() {
       <div className="container-fluid p-4">
         <div className="card">
           <div className="card-body text-center">
-            <i className="bi bi-exclamation-triangle text-warning" style={{ fontSize: "3rem" }}></i>
+            <i className="fa fa-exclamation-triangle text-warning" style={{ fontSize: "3rem" }}></i>
             <h3 className="mt-3">Category Not Found</h3>
             <p className="text-muted">The category you're looking for doesn't exist or has been removed.</p>
             <button 
               className="btn btn-primary"
               onClick={() => navigate('/categories')}
             >
-              <i className="bi bi-arrow-left me-2"></i>
+              <i className="fa fa-arrow-left me-2"></i>
               Back to Categories
             </button>
           </div>
@@ -77,7 +77,7 @@ export default function CategoriesDetail() {
             className="btn btn-outline-secondary me-3"
             onClick={() => navigate('/categories')}
           >
-            <i className="bi bi-arrow-left me-2"></i>
+            <i className="fa fa-arrow-left me-2"></i>
             Back to Categories
           </button>
           <h2 className="mb-0">Category Details</h2>
@@ -87,7 +87,7 @@ export default function CategoriesDetail() {
             className="btn btn-outline-primary me-2"
             onClick={() => navigate(`/categories/edit/${category.id}`)}
           >
-            <i className="bi bi-pencil me-2"></i>
+            <i className="fa fa-pencil me-2"></i>
             Edit Category
           </button>
         </div>
@@ -151,21 +151,21 @@ export default function CategoriesDetail() {
                   className="btn btn-outline-primary"
                   onClick={() => navigate(`/categories/edit/${category.id}`)}
                 >
-                  <i className="bi bi-pencil me-2"></i>
+                  <i className="fa fa-pencil me-2"></i>
                   Edit Category
                 </button>
                 <button 
                   className="btn btn-outline-info"
                   onClick={() => navigate('/categories')}
                 >
-                  <i className="bi bi-list me-2"></i>
+                  <i className="fa fa-list me-2"></i>
                   View All Categories
                 </button>
                 <button 
                   className="btn btn-outline-secondary"
                   onClick={() => navigate('/listings')}
                 >
-                  <i className="bi bi-box me-2"></i>
+                  <i className="fa fa-box me-2"></i>
                   View Listings
                 </button>
               </div>

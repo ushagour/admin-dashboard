@@ -5,7 +5,6 @@ import { useAuth } from '../../hooks/useAuth';
 import { useNotifications } from '../../hooks/useNotifications';
 function Header({sidebarOpen, setSidebarOpen}) {
   const { user, logout } = useAuth();
-  console.log("user in Header:", user); // Debugging line;
   
   const { notifications, loading, error, refresh } = useNotifications(user?.userId);
 
@@ -23,7 +22,7 @@ function Header({sidebarOpen, setSidebarOpen}) {
           onClick={() => setSidebarOpen(!sidebarOpen)}
           type="button"
         >
-          <i className="bi bi-list"></i>
+          <i className="fa fa-list"></i>
         </button>
 
         <div className="d-flex flex-grow-1 align-items-center">
@@ -42,7 +41,7 @@ function Header({sidebarOpen, setSidebarOpen}) {
                 aria-expanded="false"
                 onClick={refresh}
               >
-                <i className="bi bi-bell"></i>
+                <i className="fa fa-bell"></i>
                 {notifications.length > 0 && (
                   <span className="badge bg-danger ms-1">{notifications.length}</span>
                 )}
@@ -112,13 +111,13 @@ function Header({sidebarOpen, setSidebarOpen}) {
                 data-bs-toggle="dropdown" 
                 aria-expanded="false"
               >
-                <i className="bi bi-person-circle"></i>
+                <i className="fa fa-person-circle"></i>
                 <span className="ms-1 d-none d-sm-inline">{user?.name || 'User'}</span>
               </button>
               <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                 <li className="dropdown-header">
                   <div className="d-flex align-items-center">
-                    <i className="bi bi-person-circle me-2"></i>
+                    <i className="fa fa-person-circle me-2"></i>
                     <div>
                       <div className="fw-bold">{user?.name || 'User'}</div>
                       <small className="text-muted">{user?.email || 'user@example.com'}</small>
@@ -128,20 +127,20 @@ function Header({sidebarOpen, setSidebarOpen}) {
                 <li><hr className="dropdown-divider" /></li>
                 <li>
                   <a className="dropdown-item" href="/Profile">
-                    <i className="bi bi-person me-2"></i>
+                    <i className="fa fa-person me-2"></i>
                     Profile
                   </a>
                 </li>
                 <li>
                   <a className="dropdown-item" href="#">
-                    <i className="bi bi-gear me-2"></i>
+                    <i className="fa fa-gear me-2"></i>
                     Settings
                   </a>
                 </li>
                 <li><hr className="dropdown-divider" /></li>
                 <li>
                   <button className="dropdown-item text-danger" onClick={handleLogout}>
-                    <i className="bi bi-box-arrow-right me-2"></i>
+                    <i className="fa fa-box-arrow-right me-2"></i>
                     Logout
                   </button>
                 </li>

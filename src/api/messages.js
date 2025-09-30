@@ -7,3 +7,7 @@ export const fetchMessages = async () => {
 }; 
 
 
+export const markMessageAsRead = async (id) => {
+  const response = await axios.patch(`${API_URL}/messages/${id}/read`, {}, getTokenHeader());
+  return response.data;
+};

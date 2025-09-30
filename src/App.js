@@ -8,7 +8,7 @@ import Profile from './pages/auth/Profile';
 import Customers from './pages/customers/Customers';
 import Orders from './pages/Orders';
 import Categories from './pages/categories/Categories';
-import Reviews from './pages/Reviews';
+import ReviewsAndMessages from './pages/ReviewsAndMessages';
 import Listings from './pages/listings/Listings';
 import { AuthProvider } from './hooks/useAuth';
 import { ProtectedRoute } from './components/ui';
@@ -36,7 +36,7 @@ function App() {
                 <Route path='/Categories/:id' element={<ProtectedRoute><CategoriesDetail /></ProtectedRoute>} />
                 <Route path='/Listings' element={<ProtectedRoute><Listings /></ProtectedRoute>} />
                 <Route path='/Listings/:id' element={<ProtectedRoute><ListingDetail /></ProtectedRoute>} />
-                <Route path='/Reviews' element={<ProtectedRoute><Reviews /></ProtectedRoute>} />
+                <Route path='/ReviewsAndMessages' element={<ProtectedRoute><ReviewsAndMessages /></ProtectedRoute>} />
                 <Route path='/Profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                 {/* other routes */}
               </Route>
