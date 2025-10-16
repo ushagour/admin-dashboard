@@ -70,17 +70,7 @@ const handleMarkAsRead = async (messageId) => {
           <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
             <h2 className="mb-2 mb-md-0">Customer Reviews & Messages</h2>
             <div className="d-flex flex-wrap gap-2">
-              <select
-                className="form-select form-select-sm"
-                style={{ width: "auto" }}
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
-              >
-                <option value="all">All Status</option>
-                <option value="open">Open</option>
-                <option value="resolved">Resolved</option>
-                <option value="closed">Closed</option>
-              </select>
+    
               <button className="btn btn-outline-secondary btn-sm">
                 <span className="me-1">🔄</span> Refresh
               </button>
@@ -131,7 +121,25 @@ const handleMarkAsRead = async (messageId) => {
 
           {/* Reviews Table */}
           <div className="card mb-4">
-            <div className="card-header">Customer Reviews</div>
+            <div className="card-header">Customer Reviews
+
+              <div className="float-end">
+                <select
+                  className="form-select form-select-sm"
+                  value={filterStatus}
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                >
+                  <option value="all">All</option>
+                  <option value="open">Open</option>
+                  <option value="resolved">Resolved</option>
+                  <option value="closed">Closed</option>
+                </select>
+              </div>
+
+
+            </div>
+
+            
             <div className="card-body p-0">
               <div className="table-responsive">
                 <table className="table table-hover mb-0">

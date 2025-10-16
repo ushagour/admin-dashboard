@@ -149,7 +149,7 @@ export default function Customers() {
                         <td>
                           <div className="d-flex align-items-center">
                             <img
-                              src={customer.avatar || "/placeholder.svg"}
+                              src={customer.avatar || "/customer.png"}
                               alt={customer.name}
                               className="rounded-circle me-2"
                               width="36"

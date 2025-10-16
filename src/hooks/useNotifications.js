@@ -17,9 +17,9 @@ export const useNotifications = (userId) => {
 
     try {
       // Use Promise.allSettled to handle partial failures gracefully
-      const [messagesRes, reclamationsRes] = await Promise.allSettled([
+      const [messagesRes, reviewsRes] = await Promise.allSettled([
         apiFetch(`/messages/unread?userId=${userId}`),
-        apiFetch(`/reclamations/unread?userId=${userId}`)
+        apiFetch(`/reviews/unread?userId=${userId}`)
       ]);
 
 
@@ -33,8 +33,8 @@ export const useNotifications = (userId) => {
       }
 
       // Process reclamations
-      if (reclamationsRes.status === 'fulfilled') {
-        allNotifications.push(...reclamationsRes.value.map(rec => ({ ...rec, type: 'reclamation' })));
+      if (reviewsRes.status === 'fulfilled') {
+        allNotifications.push(...reviewsRes.value.map(rec => ({ ...rec, type: 'reclamation' })));
       }
 
       // Sort by creation date (newest first)

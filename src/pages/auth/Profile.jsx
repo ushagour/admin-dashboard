@@ -45,7 +45,7 @@ export default function Profile() {
           <div className="card shadow-sm">
             <div className="card-body text-center">
               <img
-                src={user.avatar || "/placeholder.svg"}
+                src={user.avatar || "https://www.gravatar.com/avatar/?d=identicon"}
                 alt="Profile"
                 className="rounded-circle mb-3"
                 width="100"

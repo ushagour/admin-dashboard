@@ -26,7 +26,7 @@ export default function CustomerDetail() {
       <div className="card mt-3" style={{ maxWidth: 400 }}>
         <div className="card-body text-center">
           <img
-            src={customer.avatar}
+            src={customer.avatar || "/customer.png"}        
             alt={customer.name}
             className="rounded-circle mb-3"
             width={80}
@@ -37,7 +37,7 @@ export default function CustomerDetail() {
           <p className="mb-1"><strong>Email:</strong> {customer.email}</p>
           <p className="mb-1"><strong>Phone:</strong> {customer.phone}</p>
           <p className="mb-1"><strong>Address:</strong> {customer.address}</p>
-          <p className="mb-1"><strong>Status:</strong> {customer.status}</p>
+          {/* <p className="mb-1"><strong>Status:</strong> {customer.status}</p> */}
           <p className="mb-0"><strong>Role:</strong> {customer.role}</p>
         </div>
       </div>

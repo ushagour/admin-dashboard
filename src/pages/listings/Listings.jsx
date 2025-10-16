@@ -7,7 +7,7 @@ import CrudModal from '../../components/ui/CrudModal';
 import ListingForm from '../../components/forms/ListingForm';
 import { Loader, ErrorMessage, Toast } from '../../components/ui';
 import { toast } from 'react-toastify';
-
+import LocationBadge from '../../components/ui/LocationBadge';
 export default function Listings() {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -71,6 +71,8 @@ export default function Listings() {
     }
   };
 
+
+  
   const handleDelete = async () => {
     try {
       await deleteListing(selectedListing.id);
@@ -163,9 +165,12 @@ export default function Listings() {
                           <span className={getStatusBadge(product.status)}>{product.status}</span>
                         </td>
                         <td>
-                          {product.latitude && product.longitude
-                            ? `${product.latitude.toFixed(3)}, ${product.longitude.toFixed(3)}`
-                            : "—"}
+                         <LocationBadge
+                            lat={product.latitude}
+                            lon={product.longitude}
+                            listingId={product.id}
+                            className=""
+                          />
                         </td>
                         <td>
                           {product.Messages && Array.isArray(product.Messages)
@@ -175,7 +180,7 @@ export default function Listings() {
                         <td>
                           <div className="btn-group btn-group-sm">
                             <button
-                              className="btn btn-outline-primary"
+                              className="btn btn-outline-secondary"
                               onClick={() => openEditModal(product)}
                               title="Edit"
                             >
